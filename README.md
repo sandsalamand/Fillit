@@ -1,5 +1,3 @@
-# Fillit
+# 42 Fillit Project
 
-42 Fillit project
-
-fill the smallest possible square with tetriminos from a text file
+Goal: use tetris pieces from a text file to fill a square of the smallest possible size
