@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 02:11:54 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/08/24 04:29:17 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/08/24 22:57:54 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,11 +29,11 @@ void	fill_2d_array(char **array, char c)
 		ft_putnbr(x);
 		ft_putchar('\n');
 		/*if I add x = 0 here it starts an infinite loop
-		obiously but it also makes the condition true somehow.
-		wtf???*/
+		obviously but it also makes the condition true somehow.*/
 		y = 0;
 		if (array[x][0])
 			ft_putendl("what the fuck");
+		//I would prefer to not have to use this way
 		while (y < 4)
 		{
 			ft_putendl("arr");
