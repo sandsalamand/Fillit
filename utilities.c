@@ -6,26 +6,35 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:45:46 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/08/24 04:29:22 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/08/29 04:06:38 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfillit.h"
 
-char		***new_3d_array(int	num_of_2d_arrays, int width, int height)
+tetrimino	*make_tetriminos(int quantity)
 {
-	int		i;
-	char	***result;
-	
-	result = (char***)malloc(sizeof(char**) * (num_of_2d_arrays + 1));
-	result[num_of_2d_arrays] = NULL;
+	int			i;
+	tetrimino	*t_array;
+	tetrimino	current;
+
+	t_array = malloc(sizeof(tetrimino) * (quantity + 1));
 	i = 0;
-	while (result[i] != NULL)
+	while (i < quantity)
 	{
-		result[i] = ft_2d_char_array(width, height);
-		i++;
+		current = malloc(sizeof(tetrimino));
+		current.first.x = 0;
+		current.first.y = 0;
+		current.second.x = 0;
+		current.second.y = 0;
+		current.third.x = 0;
+		current.third.y = 0;
+		current.fourth.x = 0;
+		current.fourth.y = 0;
+		t_array[i++] = current;
 	}
-	return (result);
+	t_array[quantity] = NULL;
+	return (t_array);
 }
 
 int			check_around_point(char **point, int x, int y)
@@ -66,28 +75,30 @@ int			count_connections(char **array)
 	return (counter);
 }
 
-char		***convert_squares_to_3d_array(int fd)
+tetrimino	*convert_squares_to_3d_array(int fd)
 {
 	int				f;
 	int				s;
 	int				t;
 	char			buffer;
-	char			***array_3d;
+	tetrimino		*t_array;
+
 
 	f = 0;
 	s = 0;
 	t = -1;
-	array_3d = (char***)malloc(sizeof(char**) * 30);
+	t_array = make_tetriminos(30);
 	while (read(fd, &buffer, 1))
 	{
 		t++;
 		if (s == 0 && t == 0)
-			array_3d[f] = ft_2d_char_array(4, 4);
+			array_3d[f] = ft_2d_char_array(4, 4, '0');
 		if (t > 4)
 			output_then_exit("bad file format");
 		if ((buffer == '#' || buffer == '.') && buffer != '\n')
 		{
-			array_3d[f][s][t] = buffer;
+			t_array[t].first.x = t;
+			t_array[t].first.y = s;
 		}
 		else if (buffer != '#' && buffer != '.' && buffer != '\n')
 			output_then_exit("bad character");

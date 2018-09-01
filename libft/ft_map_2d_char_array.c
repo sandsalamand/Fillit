@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/07 23:15:00 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/08/08 21:44:52 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/08/29 01:45:37 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ char	**ft_map_2d_char_array(char **array, char (*f)(char))
 	z = 0;
 	while (array[0][z])
 		z++;
-	result = ft_2d_char_array(i, z);
+	result = ft_2d_char_array(i, z, '0');
 	if (!result)
 		return (NULL);
 	i = 0;

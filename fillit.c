@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 17:43:39 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/08/24 04:29:20 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/08/29 04:02:23 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int		fillit(char ***array_3d)
 
 	f = 0;
 	square_size = 4;
-	square = ft_2d_char_array(square_size, square_size);
-	fill_2d_array(square, '.');
+	square = ft_2d_char_array(square_size, square_size, '.');
 	while (array_3d[f])
 	{
 		s = 0;

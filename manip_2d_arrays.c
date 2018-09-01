@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   more_utilities.c                                   :+:      :+:    :+:   */
+/*   manip_2d_arrays.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/17 02:11:54 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/08/24 22:57:54 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/08/30 01:16:27 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ char	**copy_2d_array(char **to_copy, int width, int height)
 	int		i;
 	int		z;
 
-	result = ft_2d_char_array(width, height);
+	result = ft_2d_char_array(width, height, '0');
 	i = 0;
 	while (result[i])
 	{

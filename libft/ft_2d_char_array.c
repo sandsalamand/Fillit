@@ -6,15 +6,16 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/06 23:37:00 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/08/24 03:00:25 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/08/29 01:42:56 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-char	**ft_2d_char_array(unsigned int width, unsigned int height)
+char	**ft_2d_char_array(unsigned int width, unsigned int height, char filler)
 {
 	unsigned int		i;
+	unsigned int		z;
 	char				**result;
 
 	if (width == 0 || height == 0)
@@ -29,6 +30,9 @@ char	**ft_2d_char_array(unsigned int width, unsigned int height)
 		result[i] = (char*)malloc(sizeof(char) * (height + 1));
 		if (!result[i])
 			return (NULL);
+		z = height;
+		while (z > 0)
+			result[i][--z] = filler;
 		result[i++][height] = '\0';
 	}
 	return (result);
