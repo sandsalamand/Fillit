@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:57:01 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/08/29 04:02:26 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/01 03:58:51 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,14 @@ typedef struct		s_point
 
 typedef struct		s_tetrimino
 {
-	point			first;
-	point			second;
-	point			third;
-	point			fourth;
+	point			points[4];
 }					tetrimino;
 
+tetrimino	*new_tetrimino();
 int			check_if_it_fits(char **array, char **square, int square_size);
 int			check_around_point(char **point, int x, int y);
 int			count_connections(char **array);
-char		***convert_squares_to_3d_array(int fd);
+tetrimino	**convert_squares_to_struct_array(int fd);
 char		**copy_2d_array(char **to_copy, int width, int height);
 void		print_2d_array(char **array);
 void		free_2d_array(char **to_free);

@@ -6,35 +6,53 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:45:46 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/08/29 04:06:38 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/01 03:58:46 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfillit.h"
 
+/*
 tetrimino	*make_tetriminos(int quantity)
 {
 	int			i;
+	int			n;
 	tetrimino	*t_array;
 	tetrimino	current;
 
 	t_array = malloc(sizeof(tetrimino) * (quantity + 1));
 	i = 0;
+	n = 0;
 	while (i < quantity)
 	{
 		current = malloc(sizeof(tetrimino));
-		current.first.x = 0;
-		current.first.y = 0;
-		current.second.x = 0;
-		current.second.y = 0;
-		current.third.x = 0;
-		current.third.y = 0;
-		current.fourth.x = 0;
-		current.fourth.y = 0;
+		while (current.points[n])
+		{
+			current.points[n].x = 0;
+			current.points[n].y = 0;
+			n++;
+		}
 		t_array[i++] = current;
 	}
 	t_array[quantity] = NULL;
 	return (t_array);
+}
+*/
+
+tetrimino	*new_tetrimino()
+{
+	int			n;
+	tetrimino	*result;
+
+	result = malloc(sizeof(tetrimino));
+	n = 0;
+	while (n < 4)
+	{
+		(*result).points[n].x = 0;
+		(*result).points[n].y = 0;
+		n++;
+	}
+	return (result);
 }
 
 int			check_around_point(char **point, int x, int y)
@@ -75,30 +93,34 @@ int			count_connections(char **array)
 	return (counter);
 }
 
-tetrimino	*convert_squares_to_3d_array(int fd)
+tetrimino	**convert_squares_struct_array(int fd)
 {
 	int				f;
 	int				s;
 	int				t;
+	int				n;
 	char			buffer;
-	tetrimino		*t_array;
+	tetrimino		**t_array;
 
 
 	f = 0;
 	s = 0;
 	t = -1;
-	t_array = make_tetriminos(30);
+	t_array = malloc(sizeof(*tetrimino) * (30 + 1));
+	t_array[30] = NULL;
+	//t_array = make_tetriminos(30);
 	while (read(fd, &buffer, 1))
 	{
 		t++;
-		if (s == 0 && t == 0)
-			array_3d[f] = ft_2d_char_array(4, 4, '0');
+		if (t == 0 && s == 0)
+			t_array[f] = new_tetrimino();
 		if (t > 4)
 			output_then_exit("bad file format");
 		if ((buffer == '#' || buffer == '.') && buffer != '\n')
 		{
-			t_array[t].first.x = t;
-			t_array[t].first.y = s;
+			(*t_array[f]).points[n].x = t;
+			(*t_array[f]).points[n].y = s;
+			n++;
 		}
 		else if (buffer != '#' && buffer != '.' && buffer != '\n')
 			output_then_exit("bad character");
@@ -112,11 +134,10 @@ tetrimino	*convert_squares_to_3d_array(int fd)
 			}
 			else
 			{
-				array_3d[f][s][t] = '\0';
 				s++;
 				t = -1;
 			}
 		}
 	}
-	return (array_3d);
+	return (t_array);
 }
