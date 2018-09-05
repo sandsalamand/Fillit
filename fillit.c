@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 17:43:39 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/01 03:58:49 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/05 03:08:12 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,16 @@ int		fillit(tetrimino **s_array)
 int		main(int argc, char **argv)
 {
 	int			fd;
+	int			num_of_squares;
 
 	if (argc != 2)
 		output_then_exit("usage: fillit target_file");
 	fd = open(argv[1], O_RDONLY);
 	if (fd == -1)
 		output_then_exit("error");
-	fillit(convert_squares_to_struct_array(fd));
+	num_of_squares = check_file_for_squares(fd);
+	close(fd);
+	fd = open(argv[1], O_RDONLY);
+	fillit(convert_squares_to_struct_array(fd, num_of_squares));
 	return (0);
 }

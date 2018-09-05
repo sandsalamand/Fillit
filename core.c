@@ -6,13 +6,12 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:45:46 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/03 00:12:14 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/05 03:09:57 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libfillit.h"
 
-/*
 tetrimino	*make_tetriminos(int quantity)
 {
 	int			i;
@@ -37,22 +36,37 @@ tetrimino	*make_tetriminos(int quantity)
 	t_array[quantity] = NULL;
 	return (t_array);
 }
-*/
 
-unsigned int	check_file_return_size(int fd)
+unsigned int	check_file_for_squares(int fd)
 {
-	unsigned int	t;
+	int				newline;
+	int				count_lines;
+	int				size;
 	char			buffer;
 
-	t = 0;
+	newline = 0;
+	size = 0;
+	count_lines = 0;
 	while (read(fd, &buffer, 1) > 0)
 	{
-		t++;
+		if (newline > 0)
+			newline --;
+		if (buffer == '\n' && newline == 0)
+		{
+				if (count_lines != 4)
+					output_then_exit("bad file format");
+				count_lines = 0;
+				newline = 2;
+				size++;
+		}
+		else if (buffer == '#' || buffer == '.')
+			count_lines++;
+		else if (buffer != '\n')
+			output_then_exit("bad file format");
 	}
-	close(fd);
-	return (t);
+	return (size);
 }
-
+/*
 tetrimino	*new_tetrimino()
 {
 	int			n;
@@ -68,6 +82,7 @@ tetrimino	*new_tetrimino()
 	}
 	return (result);
 }
+*/
 
 int			check_around_point(char **point, int x, int y)
 {
@@ -107,7 +122,7 @@ int			count_connections(char **array)
 	return (counter);
 }
 
-tetrimino	**convert_squares_to_struct_array(int fd)
+tetrimino	**convert_squares_to_struct_array(int fd, int num_of_squres)
 {
 	int				f;
 	int				s;
@@ -121,14 +136,11 @@ tetrimino	**convert_squares_to_struct_array(int fd)
 	s = 0;
 	t = -1;
 	n = 0;
-	t_array = malloc(sizeof(tetrimino) * (30 + 1));
-	t_array[30] = NULL;
-	//t_array = make_tetriminos((size));
+	t_array = malloc(sizeof(tetrimino) * (num_of_squares + 1));
+	t_array = make_tetriminos((num_of_squares));
 	while (read(fd, &buffer, 1))
 	{
 		t++;
-		if (t == 0 && s == 0)
-			t_array[f] = new_tetrimino();
 		if (t > 4)
 			output_then_exit("bad file format");
 		if (buffer == '#')
