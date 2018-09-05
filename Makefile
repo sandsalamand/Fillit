@@ -6,7 +6,7 @@
 #    By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/08/12 16:50:11 by sgrindhe          #+#    #+#              #
-#    Updated: 2018/09/01 03:08:48 by sgrindhe         ###   ########.fr        #
+#    Updated: 2018/09/02 21:59:58 by sgrindhe         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,8 +19,8 @@ LIBDIR	= libft
 
 FILLIT	= fillit.c
 
-SRC = utilities.c \
-	  manip_2d_arrays.c
+SRC = core.c \
+	  manip_2d_arrays.c \
 
 OBJ = $(SRC:.c=.o)
 
@@ -48,6 +48,10 @@ re: fclean $(NAME)
 quick:
 	rm -f $(NAME)
 	gcc $(CFLAG) -o $(NAME) $(FILLIT) $(SRC) -L$(LIBDIR) -lft
+
+debug:
+	rm -f $(NAME)
+	gcc $(CFLAG) -g -o $(NAME) $(FILLIT) $(SRC) -L$(LIBDIR) -lft
 
 .PHONY: clean fclean re
 

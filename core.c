@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utilities.c                                        :+:      :+:    :+:   */
+/*   core.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:45:46 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/02 21:57:47 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/03 00:12:14 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ tetrimino	**convert_squares_to_struct_array(int fd)
 	n = 0;
 	t_array = malloc(sizeof(tetrimino) * (30 + 1));
 	t_array[30] = NULL;
-	//t_array = make_tetriminos(30);
+	//t_array = make_tetriminos((size));
 	while (read(fd, &buffer, 1))
 	{
 		t++;
@@ -131,7 +131,7 @@ tetrimino	**convert_squares_to_struct_array(int fd)
 			t_array[f] = new_tetrimino();
 		if (t > 4)
 			output_then_exit("bad file format");
-		if ((buffer == '#' || buffer == '.') && buffer != '\n')
+		if (buffer == '#')
 		{
 			(*t_array[f]).points[n].x = t;
 			(*t_array[f]).points[n].y = s;
