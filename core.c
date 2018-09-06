@@ -84,12 +84,12 @@ tetrimino	*new_tetrimino()
 }
 */
 
-int			check_around_point(char **point, int x, int y)
+int			check_around_point(point *points, int x, int y)
 {
 	int		counter;
 
 	counter = 0;
-	if (x != 3 && point[x + 1][y] == '#')
+	if (points[n].x != 3 && point[x + 1][y] == '#')
 		counter++;
 	if (x != 0 && point[x - 1][y] == '#')
 		counter++;
@@ -100,26 +100,38 @@ int			check_around_point(char **point, int x, int y)
 	return (counter);
 }
 
-int			count_connections(char **array)
+int			count_connections(tetrimino **arr)
 {
-	int		y;
-	int		x;
+	int		i;
+	int		n;
 	int		counter;
-
+	
 	counter = 0;
-	x = 0;
-	while (array[x])
+	i = 0;
+	while (arr[i])
 	{
-		y = 0;
-		while (array[x][y])
+		n = 0;
+		while (points[n])
 		{
-			if (array[x][y] == '#')
-				counter += check_around_point(array, x, y);
-			y++;
+			if (arr[i].points[n].x != 3 && arr.points[n].x + 1
+				== arr.points[n + 1].x)
+				counter++;
+			if (arr[i].points[n].x != 0 && arr.points[n].x - 1
+				== arr.points[n + 1].x)
+				counter++;
+			//switch these to this ^ format
+			if (y != 3 && point[x][y + 1] == '#')
+				counter++;
+			if (y != 0 && point[x][y - 1] == '#')
+				counter++;
+		//	counter += check_around_point(array, x, y);
 		}
-		x++;
+		i++;
 	}
-	return (counter);
+	if (counter == 6 || counter == 8)
+		return (1);
+	else
+		return (0);
 }
 
 tetrimino	**convert_squares_to_struct_array(int fd, int num_of_squres)
@@ -128,36 +140,32 @@ tetrimino	**convert_squares_to_struct_array(int fd, int num_of_squres)
 	int				s;
 	int				t;
 	int				n;
-	char			buffer;
-	tetrimino		**t_array;
+	char				buffer;
+	tetrimino			**t_array;
 
 
 	f = 0;
 	s = 0;
 	t = -1;
 	n = 0;
-	t_array = malloc(sizeof(tetrimino) * (num_of_squares + 1));
 	t_array = make_tetriminos((num_of_squares));
 	while (read(fd, &buffer, 1))
 	{
 		t++;
-		if (t > 4)
-			output_then_exit("bad file format");
 		if (buffer == '#')
 		{
+			if (n >= 3)
+				output_then_exit("bad tetrimino format");
 			(*t_array[f]).points[n].x = t;
 			(*t_array[f]).points[n].y = s;
 			n++;
 		}
-		else if (buffer != '#' && buffer != '.' && buffer != '\n')
-			output_then_exit("bad character");
 		else if (buffer == '\n')
 		{
 			if (s == 4)
 			{
-				if (t != 4)
-					output_then_exit("invalid file format");
 				f++;
+				n = 0;
 				s = 0;
 				t = -1;
 			}
