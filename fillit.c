@@ -14,7 +14,7 @@
 
 int		check_if_it_fits(char **array, char **square, int square_size)
 {
-	char	**copy;
+	char		**copy;
 	int		x;
 	int		y;
 
@@ -86,7 +86,7 @@ int		fillit(tetrimino **s_array)
 	while (s_array[f] != NULL)
 	{
 		s = 0;
-		t = 0; t++;/* <-----useless
+		t = 0; t++; square[0][0] = '0'; s++;/* <-----useless
 		//print_2d_array(array_3d[f]);
 		if (count_connections(array_3d[f]) == 8
 				|| count_connections(array_3d[f]) == 6)

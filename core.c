@@ -12,12 +12,12 @@
 
 #include "libfillit.h"
 
-tetrimino	*make_tetriminos(int quantity)
+tetrimino	**make_tetriminos(int quantity)
 {
 	int			i;
 	int			n;
-	tetrimino	*t_array;
-	tetrimino	current;
+	tetrimino	**t_array;
+	tetrimino	*current;
 
 	t_array = malloc(sizeof(tetrimino) * (quantity + 1));
 	i = 0;
@@ -25,10 +25,11 @@ tetrimino	*make_tetriminos(int quantity)
 	while (i < quantity)
 	{
 		current = malloc(sizeof(tetrimino));
-		while (current.points[n])
+		n = 0;
+		while (n < 4)
 		{
-			current.points[n].x = 0;
-			current.points[n].y = 0;
+			(*current).points[n].x = 0;
+			(*current).points[n].y = 0;
 			n++;
 		}
 		t_array[i++] = current;
@@ -66,13 +67,13 @@ static int		check_around_point(point *points, int n)
 	{
 		if (i != n)
 		{
-			if (arr.points[n].x + 1	== arr.points[i].x)
+			if (points[n].x + 1 == points[i].x)
 				counter++;
-			if (arr.points[n].x - 1	== arr.points[i].x)
+			if (points[n].x - 1 == points[i].x)
 				counter++;
-			if (arr.points[n].y + 1	== arr.points[i].y)
+			if (points[n].y + 1 == points[i].y)
 				counter++;
-			if (arr.points[n].y - 1	== arr.points[i].y)
+			if (points[n].y - 1 == points[i].y)
 				counter++;
 		}
 		i++;
@@ -93,7 +94,7 @@ int			count_connections(tetrimino **arr)
 		n = 0;
 		while (n < 4)
 		{
-			counter = check_around_point(arr[i].points, n);
+			counter = check_around_point((*arr[i]).points, n);
 			n++;
 		}
 		i++;
@@ -104,7 +105,7 @@ int			count_connections(tetrimino **arr)
 		return (0);
 }
 
-tetrimino	**convert_squares_to_struct_array(int fd, int num_of_squres)
+tetrimino	**convert_squares_to_struct_array(int fd, int num_of_squares)
 {
 	int				f;
 	int				s;

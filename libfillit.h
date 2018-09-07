@@ -29,14 +29,14 @@ typedef struct		s_tetrimino
 	point			points[4];
 }					tetrimino;
 
-unsigned int	check_file_for_squares(int fd);
-static int	check_around_point(point *points, int n);
-int		count_connections(char **array);
-tetrimino	**convert_squares_to_struct_array(int fd);
-char		**copy_2d_array(char **to_copy, int width, int height);
-void		print_2d_array(char **array);
-void		free_2d_array(char **to_free);
-void		output_then_exit(char *str);
-void		fill_2d_array(char **array, char c);
+tetrimino			**make_tetriminos(int quantity);
+unsigned int		check_file_for_squares(int fd);
+int					count_connections(tetrimino **arr);
+tetrimino			**convert_squares_to_struct_array(int fd, int num_of_squares);
+char				**copy_2d_array(char **to_copy, int width, int height);
+void				print_2d_array(char **array);
+void				free_2d_array(char **to_free);
+void				output_then_exit(char *str);
+void				fill_2d_array(char **array, char c);
 
 #endif
