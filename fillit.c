@@ -12,6 +12,7 @@
 
 #include "libfillit.h"
 
+//yeahhhhhhhhhhhhhhhhhhhhhhhh
 int		check_if_it_fits(char **array, char **square, int square_size)
 {
 	char	**copy;
