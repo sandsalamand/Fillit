@@ -29,10 +29,9 @@ typedef struct		s_tetrimino
 	point			points[4];
 }					tetrimino;
 
-tetrimino	*new_tetrimino();
-int			check_if_it_fits(char **array, char **square, int square_size);
-int			check_around_point(char **point, int x, int y);
-int			count_connections(char **array);
+unsigned int	check_file_for_squares(int fd);
+static int	check_around_point(point *points, int n);
+int		count_connections(char **array);
 tetrimino	**convert_squares_to_struct_array(int fd);
 char		**copy_2d_array(char **to_copy, int width, int height);
 void		print_2d_array(char **array);

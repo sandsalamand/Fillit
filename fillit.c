@@ -42,6 +42,36 @@ int		check_if_it_fits(char **array, char **square, int square_size)
 	return (1);
 }
 
+unsigned int	check_file_for_squares(int fd)
+{
+	int			newline;
+	int			count_lines;
+	int			size;
+	char			buffer;
+
+	newline = 0;
+	size = 0;
+	count_lines = 0;
+	while (read(fd, &buffer, 1) > 0)
+	{
+		if (newline > 0)
+			newline --;
+		if (buffer == '\n' && newline == 0)
+		{
+				if (count_lines != 4)
+					output_then_exit("bad file format");
+				count_lines = 0;
+				newline = 2;
+				size++;
+		}
+		else if (buffer == '#' || buffer == '.')
+			count_lines++;
+		else if (buffer != '\n')
+			output_then_exit("bad file format");
+	}
+	return (size);
+}
+
 int		fillit(tetrimino **s_array)
 {
 	int		f;

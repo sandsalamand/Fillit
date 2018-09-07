@@ -37,35 +37,6 @@ tetrimino	*make_tetriminos(int quantity)
 	return (t_array);
 }
 
-unsigned int	check_file_for_squares(int fd)
-{
-	int				newline;
-	int				count_lines;
-	int				size;
-	char			buffer;
-
-	newline = 0;
-	size = 0;
-	count_lines = 0;
-	while (read(fd, &buffer, 1) > 0)
-	{
-		if (newline > 0)
-			newline --;
-		if (buffer == '\n' && newline == 0)
-		{
-				if (count_lines != 4)
-					output_then_exit("bad file format");
-				count_lines = 0;
-				newline = 2;
-				size++;
-		}
-		else if (buffer == '#' || buffer == '.')
-			count_lines++;
-		else if (buffer != '\n')
-			output_then_exit("bad file format");
-	}
-	return (size);
-}
 /*
 tetrimino	*new_tetrimino()
 {
@@ -84,19 +55,28 @@ tetrimino	*new_tetrimino()
 }
 */
 
-int			check_around_point(point *points, int x, int y)
+static int		check_around_point(point *points, int n)
 {
 	int		counter;
+	int		i;
 
 	counter = 0;
-	if (points[n].x != 3 && point[x + 1][y] == '#')
-		counter++;
-	if (x != 0 && point[x - 1][y] == '#')
-		counter++;
-	if (y != 3 && point[x][y + 1] == '#')
-		counter++;
-	if (y != 0 && point[x][y - 1] == '#')
-		counter++;
+	i = 0;
+	while (i < 4)
+	{
+		if (i != n)
+		{
+			if (arr.points[n].x + 1	== arr.points[i].x)
+				counter++;
+			if (arr.points[n].x - 1	== arr.points[i].x)
+				counter++;
+			if (arr.points[n].y + 1	== arr.points[i].y)
+				counter++;
+			if (arr.points[n].y - 1	== arr.points[i].y)
+				counter++;
+		}
+		i++;
+	}
 	return (counter);
 }
 
@@ -111,20 +91,10 @@ int			count_connections(tetrimino **arr)
 	while (arr[i])
 	{
 		n = 0;
-		while (points[n])
+		while (n < 4)
 		{
-			if (arr[i].points[n].x != 3 && arr.points[n].x + 1
-				== arr.points[n + 1].x)
-				counter++;
-			if (arr[i].points[n].x != 0 && arr.points[n].x - 1
-				== arr.points[n + 1].x)
-				counter++;
-			//switch these to this ^ format
-			if (y != 3 && point[x][y + 1] == '#')
-				counter++;
-			if (y != 0 && point[x][y - 1] == '#')
-				counter++;
-		//	counter += check_around_point(array, x, y);
+			counter = check_around_point(arr[i].points, n);
+			n++;
 		}
 		i++;
 	}
