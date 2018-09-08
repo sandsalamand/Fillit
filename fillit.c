@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 17:43:39 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/05 03:08:12 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/08 02:02:19 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,29 +44,29 @@ int		check_if_it_fits(char **array, char **square, int square_size)
 
 unsigned int	check_file_for_squares(int fd)
 {
-	int			newline;
-	int			count_lines;
+	int			lines;
+	int			chars;
 	int			size;
-	char			buffer;
+	char		buffer;
 
-	newline = 0;
+	lines = 0;
 	size = 0;
-	count_lines = 0;
+	chars = 0;
 	while (read(fd, &buffer, 1) > 0)
 	{
-		if (newline > 0)
-			newline --;
-		if (buffer == '\n' && newline == 0)
+		chars++;
+		if (buffer == '\n')
 		{
-				if (count_lines != 4)
+				lines++;
+				if (chars != 5 && lines != 5)
 					output_then_exit("bad file format");
-				count_lines = 0;
-				newline = 2;
-				size++;
+				chars = 0;
+				if (lines == 5)
+					size++;
+				if (lines == 6)
+					lines = 1;
 		}
-		else if (buffer == '#' || buffer == '.')
-			count_lines++;
-		else if (buffer != '\n')
+		else if (buffer != '#' && buffer != '.')
 			output_then_exit("bad file format");
 	}
 	return (size);

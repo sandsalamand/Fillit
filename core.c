@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:45:46 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/05 03:09:57 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/08 00:52:20 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,6 @@ tetrimino	**make_tetriminos(int quantity)
 	t_array[quantity] = NULL;
 	return (t_array);
 }
-
-/*
-tetrimino	*new_tetrimino()
-{
-	int			n;
-	tetrimino	*result;
-
-	result = malloc(sizeof(tetrimino));
-	n = 0;
-	while (n < 4)
-	{
-		(*result).points[n].x = 0;
-		(*result).points[n].y = 0;
-		n++;
-	}
-	return (result);
-}
-*/
 
 static int		check_around_point(point *points, int n)
 {
@@ -105,7 +87,7 @@ int			count_connections(tetrimino **arr)
 		return (0);
 }
 
-tetrimino	**convert_squares_to_struct_array(int fd, int num_of_squares)
+tetrimino		**convert_squares_to_struct_array(int fd, int num_of_squares)
 {
 	int				f;
 	int				s;
@@ -125,11 +107,8 @@ tetrimino	**convert_squares_to_struct_array(int fd, int num_of_squares)
 		t++;
 		if (buffer == '#')
 		{
-			if (n >= 3)
-				output_then_exit("bad tetrimino format");
 			(*t_array[f]).points[n].x = t;
-			(*t_array[f]).points[n].y = s;
-			n++;
+			(*t_array[f]).points[n++].y = s;
 		}
 		else if (buffer == '\n')
 		{
