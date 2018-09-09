@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 17:43:39 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/08 02:02:19 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/09 01:05:47 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,22 +72,75 @@ unsigned int	check_file_for_squares(int fd)
 	return (size);
 }
 
-int		fillit(tetrimino **s_array)
+int		check_against_tetrimino(int x, int y, tetrimino *tet)
+{
+	int		n;
+
+	n = 0;
+	while (n < 4)
+	{
+		if (x == tet.points[n].x && y == tet.points[n].y)
+			return (1);
+		n++;
+	}
+}
+
+int		try_place_tetrimino(tetrimino *tet, char **square, int x, int y)
+{
+	int		n;
+	int		x_orig;
+	int		y_orig;
+
+	n = 0;
+	y_orig = y;
+	x_orig = x;
+	while (y - y_orig)
+	{
+		x = x_orig;
+		while (square[y][x] != NULL)
+		{
+			if (square[y][x] == '#')
+			{
+				if (check_against_tetrimino(x, y, tet) == 1)
+
+			}
+			x++;
+		}
+		y++;
+	}
+}
+
+int		fillit(tetrimino **t_array)
 {
 	int		f;
-	int		s;
-	int		t;
+	int		x;
+	int		y;
 	char	**square;
 	int		square_size;
 
 	f = 0;
+	x = 0;
 	square_size = 4;
 	square = ft_2d_char_array(square_size, square_size, '.');
-	while (s_array[f] != NULL)
+	print_2d_array(square);
+	while (t_array[f] != NULL)
 	{
-		s = 0;
-		t = 0; t++; square[0][0] = '0'; s++;/* <-----useless
+		y = 0;
+		while (y < 4)
+		{
+			x = 0;
+			while (x < 4)
+			{
+				if (try_place_tetrimino(t_array[f], x, y) == 0)
+					x++;
+				else
+					f++;
+					break;
+			}
+		}
+	}
 		//print_2d_array(array_3d[f]);
+		/*
 		if (count_connections(array_3d[f]) == 8
 				|| count_connections(array_3d[f]) == 6)
 		{
