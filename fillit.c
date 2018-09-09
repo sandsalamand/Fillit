@@ -72,42 +72,20 @@ unsigned int	check_file_for_squares(int fd)
 	return (size);
 }
 
-int		check_against_tetrimino(int x, int y, tetrimino *tet)
+/*need to move stored tetrimino points up left as much as possible
+	before they reach this point, towards 0,0*/
+int		try_place_tetrimino(tetrimino *tet, char **square, int x, int y)
 {
 	int		n;
 
 	n = 0;
 	while (n < 4)
 	{
-		if (x == tet.points[n].x && y == tet.points[n].y)
+		if (square[tet.points[n].y + y][tet.points[n].x + x] == '#')
 			return (1);
 		n++;
 	}
-}
-
-int		try_place_tetrimino(tetrimino *tet, char **square, int x, int y)
-{
-	int		n;
-	int		x_orig;
-	int		y_orig;
-
-	n = 0;
-	y_orig = y;
-	x_orig = x;
-	while (y - y_orig)
-	{
-		x = x_orig;
-		while (square[y][x] != NULL)
-		{
-			if (square[y][x] == '#')
-			{
-				if (check_against_tetrimino(x, y, tet) == 1)
-
-			}
-			x++;
-		}
-		y++;
-	}
+	return (0);
 }
 
 int		fillit(tetrimino **t_array)
