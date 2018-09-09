@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:45:46 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/08 00:52:20 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/08 20:19:12 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,6 @@ int			count_connections(tetrimino **arr)
 
 tetrimino		**convert_squares_to_struct_array(int fd, int num_of_squares)
 {
-	int				f;
 	int				s;
 	int				t;
 	int				n;
@@ -97,24 +96,23 @@ tetrimino		**convert_squares_to_struct_array(int fd, int num_of_squares)
 	tetrimino			**t_array;
 
 
-	f = 0;
 	s = 0;
 	t = -1;
 	n = 0;
 	t_array = make_tetriminos((num_of_squares));
-	while (read(fd, &buffer, 1))
+	while (read(fd, &buffer, 1) > 0 && (num_of_squares - 1) >= 0)
 	{
 		t++;
 		if (buffer == '#')
 		{
-			(*t_array[f]).points[n].x = t;
-			(*t_array[f]).points[n++].y = s;
+			(*t_array[num_of_squares - 1]).points[n].x = t;
+			(*t_array[num_of_squares - 1]).points[n++].y = s;
 		}
 		else if (buffer == '\n')
 		{
 			if (s == 4)
 			{
-				f++;
+				num_of_squares--;
 				n = 0;
 				s = 0;
 				t = -1;
