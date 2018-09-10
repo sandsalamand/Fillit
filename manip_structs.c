@@ -10,6 +10,8 @@
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "libfillit.h"
+
 /*
 tetrimino	*new_tetrimino()
 {
@@ -42,25 +44,30 @@ void			print_struct(tetrimino *tet)
 	int		n;
 
 	n = 0;
-	while (n < 4)
+	p.y = 0;
+	while (p.y < 4)
 	{
-		p.y = 0;
-		while (p.y < 4)
+		p.x = 0;
+		if (point_cmp(p, (*tet).points[n]) == 1)
+			ft_putchar('#');
+		while (p.x < 4)
 		{
-			p.x = 0;
-			if (point_cmp(p, tet.points[n]) == 1)
-				ft_putchar('#');
-			while (p.x < 4)
+			n = 0;
+			while (n < 4)
 			{
-				if (point_cmp(p == tet.points[n]) == 1)
+				if (point_cmp(p, (*tet).points[n]) == 1)
+				{
 					ft_putchar('#');
-				else
-					ft_putchar('0');
-				p.x++;
+					break ;
+				}
+				n++;
 			}
-			p.y++;
+			if (n == 4)
+				ft_putchar('0');
+			p.x++;
 		}
-		n++;
+		ft_putchar('\n');
+		p.y++;
 	}
 }
 
@@ -71,12 +78,12 @@ static void		shift_points_left(tetrimino *tet, int distance)
 	n = 0;
 	while (n < 4)
 	{
-		tet.points[n].x -= distance;
+		(*tet).points[n].x -= distance;
 		n++;
 	}
 }
 
-void			*move_to_0_0(tetrimino **tets, int num_of_squares)
+void			move_to_0_0(tetrimino **tets, int num_of_squares)
 {
 	tetrimino	*current;
 	int			i;
@@ -87,16 +94,17 @@ void			*move_to_0_0(tetrimino **tets, int num_of_squares)
 	smallest_offset = 3;
 	while (i < num_of_squares)
 	{
-		current = (*tet)[i];
+		current = tets[i];
 		n = 0;
 		while (n < 4)
 		{
-			if (current.points[n].x < smallest_offset)
-				smallest_offset = current.points[n].x;
+			if ((*current).points[n].x < smallest_offset)
+				smallest_offset = (*current).points[n].x;
 			n++;
 		}
 		print_struct(current);
 		shift_points_left(current, smallest_offset);
+		ft_putchar('\n');
 		print_struct(current);
 		i++;
 	}

@@ -21,6 +21,7 @@ FILLIT	= fillit.c
 
 SRC = core.c \
 	  manip_2d_arrays.c \
+	  manip_structs.c \
 
 OBJ = $(SRC:.c=.o)
 
