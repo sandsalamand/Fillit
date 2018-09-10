@@ -29,7 +29,7 @@ typedef struct		s_tetrimino
 	point			points[4];
 }					tetrimino;
 
-tetrimino			**move_to_0_0(tetrimino **tets, int num_of_squares);
+void				**move_to_0_0(tetrimino **tets, int num_of_squares);
 tetrimino			**make_tetriminos(int quantity);
 unsigned int		check_file_for_squares(int fd);
 int					count_connections(tetrimino **arr);
