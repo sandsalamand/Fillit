@@ -146,6 +146,7 @@ int		fillit(tetrimino **t_array)
 int		main(int argc, char **argv)
 {
 	int			fd;
+	tetrimino	**temp;
 	int			num_of_squares;
 
 	if (argc != 2)
@@ -156,6 +157,8 @@ int		main(int argc, char **argv)
 	num_of_squares = check_file_for_squares(fd);
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
-	fillit(convert_squares_to_struct_array(fd, num_of_squares));
+	temp = convert_squares_to_struct_array(fd, num_of_squares);
+	move_to_0_0(temp, num_of_squares);
+	fillit(temp);
 	return (0);
 }
