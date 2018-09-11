@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 17:43:39 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/09 01:05:47 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/10 22:58:58 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,73 +72,65 @@ unsigned int	check_file_for_squares(int fd)
 	return (size);
 }
 
-int		try_place_tetrimino(tetrimino *tet, char **square, int x, int y)
+int		try_place_tetrimino(tetrimino *tet, char **square, point p, int sq_size)
 {
 	int		n;
 
 	n = 0;
 	while (n < 4)
 	{
-		if (square[(*tet).points[n].y + y][(*tet).points[n].x + x] == '#')
-			return (1);
+		if ((*tet).points[n].y > sq_size || (*tet).points[n].x > sq_size
+			|| square[(*tet).points[n].y + p.y][(*tet).points[n].x + p.x] == '#')
+			return (0);
 		n++;
 	}
-	return (0);
+	return (1);
 }
 
-int		fillit(tetrimino **t_array)
+void	place_tetrimino(tetrimino *tet, char **square, int x, int y)
+{
+	int		n;
+
+	n = 0;
+	while (n < 4)
+	{
+		square[(*tet).points[n].y + y][(*tet).points[n].x + x] = '#';
+		n++;
+	}
+}
+
+int		fillit(tetrimino **tets, int num_of_squares)
 {
 	int		f;
-	int		x;
-	int		y;
+	point	p;
 	char	**square;
 	int		square_size;
 
-	f = 0;
-	x = 0;
+	f = num_of_squares - 1;
+	p.x = 0;
 	square_size = 4;
-	square = ft_2d_char_array(square_size, square_size, '.');
-	print_2d_array(square);
-	while (t_array[f] != NULL)
+	while (f >= 0)
 	{
-		y = 0;
-		while (y < 4)
+		square = ft_2d_char_array(square_size, square_size, '.');
+		p.y = 0;
+		while (p.y < square_size)
 		{
-			x = 0;
-			while (x < 4)
+			p.x = 0;
+			while (p.x < square_size)
 			{
-				if (try_place_tetrimino(t_array[f], square, x, y) == 0)
-					x++;
-				else
+				if (try_place_tetrimino(tets[f], square, p, square_size) == 1)
 				{
-					f++;
-					break ;
+					place_tetrimino(tets[f], square, p.x, p.y);
+					f--;
 				}
+				p.x++;
 			}
+			p.y++;
 		}
-	}
-		//print_2d_array(array_3d[f]);
-		/*
-		if (count_connections(array_3d[f]) == 8
-				|| count_connections(array_3d[f]) == 6)
-		{
-				t = 0;
-				while (array_3d[f][s][t])
-				{
-					if (square[s][t] == '.')
-					{
-						if (check_if_it_fits(array_3d[f], square, square_size) == 0)
-							square_size++;
-					}
-					t++;
-				}
-			f++;
-		}
-		else
-			output_then_exit("invalid tetrimino");
 		print_2d_array(square);
+		free_2d_array(square);
 		square_size++;
-	*/
+	}
 	return (1);
 }
 
@@ -157,7 +149,11 @@ int		main(int argc, char **argv)
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	temp = convert_squares_to_struct_array(fd, num_of_squares);
+	/* this is broken, need to fix eventually
+	if (count_connections(temp) == 0)
+		output_then_exit("invalid tetrimino");
+	*/
 	move_to_0_0(temp, num_of_squares);
-	//fillit(temp);
+	fillit(temp, num_of_squares);
 	return (0);
 }

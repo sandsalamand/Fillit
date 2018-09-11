@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 00:41:50 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/08 00:41:59 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/10 22:29:31 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,14 +71,33 @@ void			print_struct(tetrimino *tet)
 	}
 }
 
-static void		shift_points_left(tetrimino *tet, int distance)
+void			print_struct_values(tetrimino *tet)
+{
+	int n;
+
+	n = 0;
+	while (n < 4)
+	{
+		ft_putstr("point ");
+		ft_putnbr(n);
+		ft_putstr(" = ");
+		ft_putnbr((*tet).points[n].x);
+		ft_putstr(", ");
+		ft_putnbr((*tet).points[n].y);
+		ft_putchar('\n');
+		n++;
+	}
+}
+
+static void		shift_points(tetrimino *tet, int x_distance, int y_distance)
 {
 	int		n;
 
 	n = 0;
 	while (n < 4)
 	{
-		(*tet).points[n].x -= distance;
+		(*tet).points[n].x += x_distance;
+		(*tet).points[n].y += y_distance;
 		n++;
 	}
 }
@@ -88,24 +107,34 @@ void			move_to_0_0(tetrimino **tets, int num_of_squares)
 	tetrimino	*current;
 	int			i;
 	int			n;
-	int			smallest_offset;
+	int			smallest_x_offset;
+	int			smallest_y_offset;
 
 	i = 0;
-	smallest_offset = 3;
 	while (i < num_of_squares)
 	{
+		smallest_x_offset = 3;
+		smallest_y_offset = 3;
 		current = tets[i];
 		n = 0;
 		while (n < 4)
 		{
-			if ((*current).points[n].x < smallest_offset)
-				smallest_offset = (*current).points[n].x;
+			if ((*current).points[n].x < smallest_x_offset)
+				smallest_x_offset = (*current).points[n].x;
+			if ((*current).points[n].y < smallest_y_offset)
+				smallest_y_offset = (*current).points[n].y;
 			n++;
 		}
+		ft_putendl("original:");
+		print_struct_values(current);
 		print_struct(current);
-		shift_points_left(current, smallest_offset);
+		shift_points(current, -smallest_x_offset, -smallest_y_offset);
+		ft_putstr("modified: smallest x offset: ");
+		ft_putnbr(smallest_x_offset);
 		ft_putchar('\n');
+		print_struct_values(current);
 		print_struct(current);
+		ft_putchar('\n');
 		i++;
 	}
 }
