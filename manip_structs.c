@@ -12,24 +12,6 @@
 
 #include "libfillit.h"
 
-/*
-tetrimino	*new_tetrimino()
-{
-	int			n;
-	tetrimino	*result;
-
-	result = malloc(sizeof(tetrimino));
-	n = 0;
-	while (n < 4)
-	{
-		(*result).points[n].x = 0;
-		(*result).points[n].y = 0;
-		n++;
-	}
-	return (result);
-}
-*/
-
 int				point_cmp(point p1, point p2)
 {
 	if (p1.x == p2.x && p1.y == p2.y)
@@ -129,9 +111,7 @@ void			move_to_0_0(tetrimino **tets, int num_of_squares)
 		print_struct_values(current);
 		print_struct(current);
 		shift_points(current, -smallest_x_offset, -smallest_y_offset);
-		ft_putstr("modified: smallest x offset: ");
-		ft_putnbr(smallest_x_offset);
-		ft_putchar('\n');
+		ft_putendl("modified: smallest x offset: ");
 		print_struct_values(current);
 		print_struct(current);
 		ft_putchar('\n');
