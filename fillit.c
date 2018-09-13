@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 17:43:39 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/10 22:58:58 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/13 00:59:44 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ int		fillit(tetrimino **tets, int num_of_squares)
 				if (try_place_tetrimino(tets[f], square, p, square_size) == 1)
 				{
 					place_tetrimino(tets[f], square, p.x, p.y);
+					print_2d_array(square);
 					f--;
 				}
 				p.x++;

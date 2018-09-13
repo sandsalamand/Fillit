@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/09/08 00:41:50 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/10 22:29:31 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/13 01:01:26 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,14 +107,18 @@ void			move_to_0_0(tetrimino **tets, int num_of_squares)
 				smallest_y_offset = (*current).points[n].y;
 			n++;
 		}
+		/*
 		ft_putendl("original:");
 		print_struct_values(current);
 		print_struct(current);
+		*/
 		shift_points(current, -smallest_x_offset, -smallest_y_offset);
+		/*
 		ft_putendl("modified: smallest x offset: ");
 		print_struct_values(current);
 		print_struct(current);
 		ft_putchar('\n');
+		*/
 		i++;
 	}
 }
