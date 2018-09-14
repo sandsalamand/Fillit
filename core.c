@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 18:45:46 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/08 20:19:12 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/13 22:10:33 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,31 +60,33 @@ static int		check_around_point(point *points, int n)
 		}
 		i++;
 	}
+	ft_putendl("counter = "); ft_putnbr(counter);
+	ft_putchar('\n');
 	return (counter);
 }
 
-int			count_connections(tetrimino **arr)
+int			count_connections(tetrimino **arr, int num_sqrs)
 {
-	int		i;
 	int		n;
 	int		counter;
 	
-	counter = 0;
-	i = 0;
-	while (arr[i])
+	num_sqrs -= 1;
+	while (num_sqrs >= 0)
 	{
+		counter = 0;
 		n = 0;
 		while (n < 4)
 		{
-			counter = check_around_point((*arr[i]).points, n);
+			counter += check_around_point((*arr[num_sqrs]).points, n);
 			n++;
 		}
-		i++;
+		ft_putendl("final counter = "); ft_putnbr(counter);
+		ft_putchar('\n');
+		if (counter != 6 && counter != 8)
+			return (0);
+		num_sqrs--;
 	}
-	if (counter == 6 || counter == 8)
-		return (1);
-	else
-		return (0);
+	return (1);
 }
 
 tetrimino		**convert_squares_to_struct_array(int fd, int num_of_squares)

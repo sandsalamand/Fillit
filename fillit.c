@@ -6,7 +6,7 @@
 /*   By: sgrindhe <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/08/10 17:43:39 by sgrindhe          #+#    #+#             */
-/*   Updated: 2018/09/13 00:59:44 by sgrindhe         ###   ########.fr       */
+/*   Updated: 2018/09/13 22:43:50 by sgrindhe         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,10 +120,9 @@ int		main(int argc, char **argv)
 	close(fd);
 	fd = open(argv[1], O_RDONLY);
 	temp = convert_squares_to_struct_array(fd, num_of_squares);
-	/* this is broken, need to fix eventually
-	if (count_connections(temp) == 0)
-		output_then_exit("invalid tetrimino");
-	*/
+	/*if (count_connections(temp, num_of_squares) != 1)
+		output_then_exit("invalid tetrimino");*/
+	ft_putendl("HEY!");
 	move_to_0_0(temp, num_of_squares);
 	fillit(temp, num_of_squares);
 	return (0);
