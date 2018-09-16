@@ -61,6 +61,8 @@ void	free_2d_array(char **to_free)
 
 	i = 0;
 	while (to_free[i])
-		ft_memdel((void**)to_free[i++]);
-	ft_memdel((void**)to_free);
+	{
+		free(to_free[i]);
+		i++;
+	}
 }

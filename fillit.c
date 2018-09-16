@@ -12,44 +12,15 @@
 
 #include "libfillit.h"
 
-int		check_if_it_fits(char **array, char **square, int square_size)
-{
-	char		**copy;
-	int		x;
-	int		y;
-
-	x = 0;
-	copy = copy_2d_array(square, square_size, square_size);
-	while (array[x])
-	{
-		print_2d_array(copy);
-		y = 0;
-		while (array[x][y])
-		{
-			if (copy[x][y] == '#')
-			{
-				free_2d_array(copy);
-				return (0);
-			}
-			else if (copy[x][y] != array[x][y])
-				copy[x][y] = array[x][y];
-			y++;
-		}
-		x++;
-	}
-	free_2d_array(square);
-	square = copy;
-	return (1);
-}
-
 int		try_place_tetrimino(tetrimino *tet, char **square, point p, int sq_size)
 {
 	int		n;
 
 	n = 0;
+	sq_size -= 1;
 	while (n < 4)
 	{
-		if ((*tet).points[n].y > sq_size || (*tet).points[n].x > sq_size
+		if ((*tet).points[n].y + p.y > sq_size || (*tet).points[n].x + p.x > sq_size
 			|| square[(*tet).points[n].y + p.y][(*tet).points[n].x + p.x] == '#')
 			return (0);
 		n++;
@@ -100,6 +71,8 @@ int		fillit(tetrimino **tets, int num_of_squares)
 		}
 		print_2d_array(square);
 		free_2d_array(square);
+		free(square);
+		ft_putendl("HEY");
 		square_size++;
 	}
 	return (1);
@@ -122,7 +95,6 @@ int		main(int argc, char **argv)
 	temp = convert_squares_to_struct_array(fd, num_of_squares);
 	/*if (count_connections(temp, num_of_squares) != 1)
 		output_then_exit("invalid tetrimino");*/
-	ft_putendl("HEY!");
 	move_to_0_0(temp, num_of_squares);
 	fillit(temp, num_of_squares);
 	return (0);
