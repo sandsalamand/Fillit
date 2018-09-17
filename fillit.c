@@ -48,7 +48,6 @@ int		fillit(tetrimino **tets, int num_of_squares)
 	int		square_size;
 
 	f = num_of_squares - 1;
-	p.x = 0;
 	square_size = 4;
 	while (f >= 0)
 	{
@@ -65,6 +64,10 @@ int		fillit(tetrimino **tets, int num_of_squares)
 					print_2d_array(square);
 					f--;
 				}
+				else if (try_place_tetrimino(tets[f], square, p, square_size) == 2)
+				{
+					UNDO LAST TETRI, THEN IF THAT FAILS, UNDO ONE BEFORE, AND SO ON
+				}	
 				p.x++;
 			}
 			p.y++;
@@ -72,8 +75,11 @@ int		fillit(tetrimino **tets, int num_of_squares)
 		print_2d_array(square);
 		free_2d_array(square);
 		free(square);
-		ft_putendl("HEY");
+		p.x = 0;
+		p.y = 0;
+		f = num_of_squares - 1;
 		square_size++;
+		ft_putendl("HEY");
 	}
 	return (1);
 }
